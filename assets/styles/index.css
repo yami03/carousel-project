@@ -1,0 +1,129 @@
+/* reset css */
+html, body {
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+li {
+  list-style:none;
+}
+
+/* slider style */
+.slider {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.slider-list {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.slider-list>li {
+  position: absolute;
+}
+
+.slider-list>li.left {
+  transform: translateX(-100%);  
+}
+
+.slider-list>li.right {
+  transform: translateX(100%);
+}
+
+.slider-list>li.active {
+  width: 100%;
+  transform: translateX(0%);
+  transition: all .5s;
+}
+
+.arrows li{
+  position: absolute;
+  top: 50%;
+}
+
+.arrows li:nth-child(1) {
+  left: 10px;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+
+.arrows li:nth-child(2) {
+  right: 10px;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+
+.arrow {
+  display: block;
+  position: relative;
+  padding: 20px;
+  border-radius: 50%;
+  background: hsla(0, 0%, 100%, 0.75);
+  border-width: 0;
+  cursor: pointer;
+  font-size: 0;
+  line-height: 0;
+}
+
+.arrow:hover {
+  background-color: #fff;
+}
+
+.arrow i{
+  position: absolute;
+  top: 11px;
+  display: inline-block;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  padding: 6px;
+  background-color: initial;
+  line-height: 0;
+  font-size: 0;
+}
+.arrow.prev i {
+  left: 15px;
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.arrow.next i {
+  left: 10px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dots button {
+  margin: 0 4px;
+  font-size: 0;
+  line-height: 0;
+  background-color: transparent;
+  border: initial;
+  padding: 5px;
+  border-radius: 50%;
+  background: #333;
+  opacity: 0.25;
+  cursor: pointer;
+}
+
+.dots .is-selected {
+  opacity: 1;
+}
