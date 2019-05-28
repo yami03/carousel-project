@@ -1,3 +1,7 @@
+:root {
+  --duration : .3s;
+}
+
 /* reset css */
 html, body {
   box-sizing: border-box;
@@ -15,9 +19,16 @@ li {
   list-style:none;
 }
 
+/* log 와 title */
+.logo {
+  display: block;
+  margin: 0 auto;
+  width: 280px;
+}
+
 h1 {
   text-align: center;
-  margin:20px 0;
+  margin:0 0 20px;
 }
 
 /* slider style */
@@ -49,30 +60,30 @@ h1 {
   opacity: 1;
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
-  -webkit-transition: -webkit-transform .3s;
-  transition: transform .3s;
+  -webkit-transition: -webkit-transform var(--duration);
+  transition: transform var(--duration);
 }
 
 .slider-list>li.right-hide {
   opacity: 1;
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
-  -webkit-transition: -webkit-transform .3s;
-  transition: transform .3s;
+  -webkit-transition: -webkit-transform var(--duration);
+  transition: transform var(--duration);
 }
 
 .slider-list>li.left-show {
   opacity: 1;
-  -webkit-animation-duration: .3s;
-  animation-duration: .3s;
+  -webkit-animation-duration: var(--duration);
+  animation-duration: var(--duration);
   -webkit-animation-name: left-slide-in;
   animation-name: left-slide-in;
 }
 
 .slider-list>li.right-show {
   opacity: 1;
-  -webkit-animation-duration: .3s;
-  animation-duration: .3s;
+  -webkit-animation-duration: var(--duration);
+  animation-duration: var(--duration);
   -webkit-animation-name: right-slide-in;
   animation-name: right-slide-in;
 }
@@ -118,7 +129,7 @@ h1 {
 
 .arrow i{
   position: absolute;
-  top: 11px;
+  top: 12.5px;
   display: inline-block;
   border: solid black;
   border-width: 0 3px 3px 0;

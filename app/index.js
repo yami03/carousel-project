@@ -1,14 +1,15 @@
 // Load application styles
-//import 'styles/index.css';
+import 'styles/index.css';
 
 // ================================
 // START YOUR APP HERE
 // ================================
 
-// @param { string } -- slider className
-// @param { string } -- arrows className
-// @param { string } -- dots className
-function Carousel(sliderClassName, arrowsClassName, dotsClassName) {
+// @param { string } -- sliderClassName
+// @param { string } -- arrowsClassName
+// @param { string } -- dotsClassName
+// @param { string } -- duration
+function Carousel(sliderClassName, arrowsClassName, dotsClassName, duration = '.3s') {
   this.arrows = Array.from(document.querySelectorAll('.' + arrowsClassName));
   this.dots = Array.from(document.querySelector('.' + dotsClassName).children);
   this.slider = Array.from(document.querySelector('.' + sliderClassName).children);
@@ -16,13 +17,17 @@ function Carousel(sliderClassName, arrowsClassName, dotsClassName) {
   this.state = false;
   this.buttonState = null;
 
+  this.durationSet(duration);
   this.arrowClick();
   this.dotsClick();
 }
 
+Carousel.prototype.durationSet = function (duration) {
+  document.getElementsByTagName("html")[0].style.setProperty('--duration', duration);
+}
+
 Carousel.prototype.arrowClick = function() {
-  
-  this.arrow = this.arrows.forEach(arrow => arrow.addEventListener('click', () => {
+  this.arrows.forEach(arrow => arrow.addEventListener('click', () => {
     if (this.state) return;
     this.state = true;
     this.buttonState = 'arrow';
@@ -38,11 +43,9 @@ Carousel.prototype.arrowClick = function() {
     this.dotsChange(currentIdx);
     this.slideShow(currentIdx);
   }));
-
 }
 
 Carousel.prototype.dotsClick = function() {
-  
   this.dots.forEach((dot, idx) => dot.addEventListener('click', () => {
     if (this.state) return;
     if (this.beforeNum === idx) return;
@@ -51,7 +54,6 @@ Carousel.prototype.dotsClick = function() {
     this.dotsChange(idx);
     this.slideShow(idx);
   }));
-
 }
 
 Carousel.prototype.dotsChange = function (next) {
@@ -61,36 +63,37 @@ Carousel.prototype.dotsChange = function (next) {
 
 Carousel.prototype.slideShow = function(idx) {
   const beforeSlide = this.slider[this.beforeNum];
-  const nextSlide = this.slider[idx];
+
   const lastToFirst = (this.beforeNum === this.slider.length - 1 && idx === 0);
   const firstToLast = (this.beforeNum === 0 && idx === this.slider.length - 1);
+
   const arrowNextLoop = (this.buttonState === 'arrow' && lastToFirst);
   const arrowPrevLoop = (this.buttonState === 'arrow' && firstToLast);
 
   beforeSlide.classList.remove('right-show', 'left-show');
   
   if ((this.beforeNum < idx && !arrowPrevLoop )|| arrowNextLoop) {
-
-    nextSlide.classList.add('right-show');
-    beforeSlide.classList.add('left-hide');
-
-    nextSlide.addEventListener('animationend', () => {
-      beforeSlide.classList.remove('left-hide');
-      this.state = false;
-    });
+    this.sliding(idx, 'left-hide', 'right-show');
 
   } else {
-    nextSlide.classList.add('left-show');
-    beforeSlide.classList.add('right-hide');
-
-    nextSlide.addEventListener('animationend', () => {
-      beforeSlide.classList.remove('right-hide');
-      this.state = false;
-    });
+    this.sliding(idx, 'right-hide', 'left-show');
   }
 
   this.beforeNum = idx;
   this.buttonState = null;
 }
 
-const carousel01 = new Carousel('slider-list', 'arrow', 'dots');
+Carousel.prototype.sliding = function (idx, beforeClass, nextClass) {
+  const beforeSlide = this.slider[this.beforeNum];
+  const nextSlide = this.slider[idx];
+
+  beforeSlide.classList.add(beforeClass);
+  nextSlide.classList.add(nextClass);
+
+  nextSlide.addEventListener('animationend', () => {
+    beforeSlide.classList.remove(beforeClass);
+    this.state = false;
+  });
+}
+
+const carousel01 = new Carousel('slider-list', 'arrow', 'dots', '.4s');
